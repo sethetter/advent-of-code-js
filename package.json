@@ -1,0 +1,25 @@
+{
+  "name": "advent-of-code",
+  "version": "1.0.0",
+  "description": "Advent Of Code solutions in JS.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "./node_modules/.bin/mocha spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/sethetter/advent-of-code.git"
+  },
+  "author": "Seth Etter <sethetter@gmail.com> (http://sethetter.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sethetter/advent-of-code/issues"
+  },
+  "homepage": "https://github.com/sethetter/advent-of-code#readme",
+  "devDependencies": {},
+  "dependencies": {
+    "chai": "^3.4.1",
+    "mocha": "^2.3.4"
+  }
+}
