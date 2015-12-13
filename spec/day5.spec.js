@@ -37,17 +37,59 @@ describe('Day5', function() {
     });
   });
 
-  describe('#isStringNice', function() {
-    it('checks for all three nice conditions', function() {
+  describe('#hasMatchingPairs', function() {
+    it('finds matching pairs of any two letters', function() {
+      var goodStr = 'abasdofijabfji';
+      var badStr = 'absdoifjojsf';
+      expect(Day5.hasMatchingPairs(goodStr)).to.equal(true);
+      expect(Day5.hasMatchingPairs(badStr)).to.equal(false);
+    });
+
+    it('does not count pairs that overlap', function() {
+      var badStr = 'jiosdfaaabxo';
+      expect(Day5.hasMatchingPairs(badStr)).to.equal(false);
+    });
+  });
+
+  describe('#hasRepeatWithBreak', function() {
+    it('finds a repeated letter with one letter in between', function() {
+      var goodStrings = ['xnsabaf', 'fbdaaa', 'dsoinfnsa'];
+      var badStrings = ['fajsdol', 'aosidjf', 'fjdosiap'];
+      goodStrings.forEach(function(str) {
+        expect(Day5.hasRepeatWithBreak(str)).to.equal(true);
+      })
+      badStrings.forEach(function(str) {
+        expect(Day5.hasRepeatWithBreak(str)).to.equal(false);
+      })
+    });
+  });
+
+  describe('#isStringNice1', function() {
+    it('checks hasThreeVowels, hasDoubleLetter and !hasBadCombos', function() {
       var goodStrings = ['aeibb', 'oouidd', 'lkajlsdffie'];
       var badStrings = ['bbbbbbb', 'abbei', 'aeiobx'];
 
       goodStrings.forEach(function(str) {
-        expect(Day5.isStringNice(str)).to.equal(true);
+        expect(Day5.isStringNice1(str)).to.equal(true);
       });
 
       badStrings.forEach(function(str) {
-        expect(Day5.isStringNice(str)).to.equal(false);
+        expect(Day5.isStringNice1(str)).to.equal(false);
+      });
+    });
+  });
+
+  describe('#isStringNice2', function() {
+    it('checks hasRepeatWithBreak and hasMatchingPairs', function() {
+      var goodStrings = ['abfjdsioaba', 'djojdj', 'aspobibsp'];
+      var badStrings = ['asdaf', 'basdgf', 'poiqhbo'];
+
+      goodStrings.forEach(function(str) {
+        expect(Day5.isStringNice2(str)).to.equal(true);
+      });
+
+      badStrings.forEach(function(str) {
+        expect(Day5.isStringNice2(str)).to.equal(false);
       });
     });
   });
