@@ -23,3 +23,15 @@ var day4Part1Answer = Day4.adventCoinSecret(day4Input, '00000');
 var day4Part2Answer = Day4.adventCoinSecret(day4Input, '000000');
 console.log('Day 4, Part 1:', day4Part1Answer);
 console.log('Day 4, Part 2:', day4Part2Answer);
+
+/**
+ * Day 5!
+ * ----------------------------------
+ */
+var Day5 = require('./lib/day5');
+var day5Input = fs.readFileSync('./input/day5.txt', 'utf8');
+var niceStringCount = 0;
+day5Input.split('\n').forEach(function(str) {
+  if (Day5.isStringNice(str)) niceStringCount++;
+});
+console.log('Day 5, Part 1:', niceStringCount);
