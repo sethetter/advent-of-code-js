@@ -66,3 +66,16 @@ day6Input.split('\n').forEach(function(instruction) {
 });
 var totalBrightness = Day6.totalBrightness(grid2);
 console.log('Day 6, Part 2:', totalBrightness);
+
+/**
+ * Day 7!
+ * -----------------------------------
+ */
+var Day7 = require('./lib/day7');
+var day7Input = fs.readFileSync('./input/day7.txt', 'utf8');
+
+day7Input.split('\n').forEach(function(instruction) {
+  Day7.processInstruction(instruction);
+});
+
+console.log('Day 7, Part 1:', Day7.getWireSignal('a'));
