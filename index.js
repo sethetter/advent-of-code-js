@@ -15,7 +15,7 @@ console.log('Day 1, Part 2:', day1Part2Answer);
 
 // TODO: Go back and redo days 2 & 3, for consistency :)
 
-/*
+/**
  * Day 4!
  * ----------------------------------
  */
@@ -28,7 +28,7 @@ var day4Part2Answer = Day4.adventCoinSecret(day4Input, '000000');
 console.log('Day 4, Part 1:', day4Part1Answer);
 console.log('Day 4, Part 2:', day4Part2Answer);
 
-/*
+/**
  * Day 5!
  * ----------------------------------
  */
@@ -78,4 +78,16 @@ day7Input.split('\n').forEach(function(instruction) {
   Day7.processInstruction(instruction);
 });
 
-console.log('Day 7, Part 1:', Day7.getWireSignal('a'));
+var signalA = Day7.getWireSignal('a');
+console.log('Day 7, Part 1:', signalA);
+
+Day7.resetWires();
+
+day7Input.split('\n').forEach(function(instruction) {
+  Day7.processInstruction(instruction);
+});
+
+Day7.setSignal('b', signalA);
+
+var newSignalA = Day7.getWireSignal('a');
+console.log('Day 7, Part 2:', newSignalA);
