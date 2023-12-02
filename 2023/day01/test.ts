@@ -27,13 +27,17 @@ Deno.test("part 2", () => {
     zoneight234: 14,
     "7pqrstsixteen": 76,
     abone40ijone2onefds: 11,
+    oneight: 18,
   };
-
-  assertEquals(p2.answer(Object.keys(lines)), 292);
 
   Object.entries(lines).forEach(([line, expected]) => {
     assertEquals(p2.calibrationValue(line), expected);
   });
+
+  assertEquals(
+    p2.answer(Object.keys(lines)),
+    Object.values(lines).reduce((sum, x) => sum + x, 0),
+  );
 });
 
 // Deno.test("frames", () => {
