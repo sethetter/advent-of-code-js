@@ -37,15 +37,10 @@ export const calibrationValue = (line: string): number => {
       if (digitStr.match(/^\d$/)) return digitStr;
 
       const wordIdx = digitWords.indexOf(digitStr);
-      if (wordIdx !== -1) return (wordIdx + 1).toString();
-
-      throw new Error(`no digit for match: ${digitStr}`);
+      return (wordIdx + 1).toString();
     });
 
-  if (!digits) throw new Error(`no ints in line: ${line}`);
-
-  const numStr = `${digits[0]}${digits[digits.length - 1]}`;
-  return parseInt(numStr);
+  return parseInt(`${digits[0]}${digits[digits.length - 1]}`);
 };
 
 export const answer = (lines: string[]): number =>
