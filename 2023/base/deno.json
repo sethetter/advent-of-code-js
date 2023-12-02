@@ -1,0 +1,6 @@
+{
+  "tasks": {
+    "p1": "deno run -A part1.ts",
+    "p2": "deno run -A part2.ts"
+  }
+}
