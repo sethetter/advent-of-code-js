@@ -1,4 +1,4 @@
-const intWords = [
+const digitWords = [
   "one",
   "two",
   "three",
@@ -9,22 +9,42 @@ const intWords = [
   "eight",
   "nine",
 ];
-const numRegex = new RegExp(`(\\d|${intWords.join("|")})`, "g");
+const digits = "123456789".split("");
+const wordsAndDigits = [...digitWords, ...digits];
+const frameSize = Math.max(...wordsAndDigits.map((s) => s.length));
+
+const charsFromTo = (str: string, from: number, to: number) => {
+  const strs = [];
+  for (let i = from; i <= to; i++) {
+    if (i >= str.length) continue;
+    strs.push(str.slice(from, i + 1));
+  }
+  return strs;
+};
+
+export const frames = (str: string, maxSize: number): string[] =>
+  str
+    .split("")
+    .reduce<string[]>(
+      (acc, _, idx) => [...acc, ...charsFromTo(str, idx, idx + maxSize - 1)],
+      [],
+    );
 
 export const calibrationValue = (line: string): number => {
-  const ints = line.match(numRegex)?.map((iStr) => {
-    if (iStr.match(/^\d$/)) return iStr;
+  const digits = frames(line, frameSize)
+    .filter((f) => wordsAndDigits.includes(f))
+    .map((digitStr) => {
+      if (digitStr.match(/^\d$/)) return digitStr;
 
-    const wordIdx = intWords.indexOf(iStr);
-    if (wordIdx !== -1) return (wordIdx + 1).toString();
+      const wordIdx = digitWords.indexOf(digitStr);
+      if (wordIdx !== -1) return (wordIdx + 1).toString();
 
-    throw new Error(`no digit for match: ${iStr}`);
-  });
+      throw new Error(`no digit for match: ${digitStr}`);
+    });
 
-  if (!ints) throw new Error(`no ints in line: ${line}`);
+  if (!digits) throw new Error(`no ints in line: ${line}`);
 
-  const numStr = `${ints[0]}${ints[ints.length - 1]}`;
-  console.log(`${line}: ${ints} -- ${numStr}`);
+  const numStr = `${digits[0]}${digits[digits.length - 1]}`;
   return parseInt(numStr);
 };
 

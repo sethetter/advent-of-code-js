@@ -40,6 +40,20 @@ Deno.test("part 2", () => {
   );
 });
 
-// Deno.test("frames", () => {
-//   assertEquals(p2.frames("abc", 2), ["ab", "bc", "c"]);
-// });
+Deno.test("frames", () => {
+  assertEquals(p2.frames("abc", 2), ["a", "ab", "b", "bc", "c"]);
+  assertEquals(p2.frames("abcde", 3), [
+    "a",
+    "ab",
+    "abc",
+    "b",
+    "bc",
+    "bcd",
+    "c",
+    "cd",
+    "cde",
+    "d",
+    "de",
+    "e",
+  ]);
+});
