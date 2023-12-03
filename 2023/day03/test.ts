@@ -19,6 +19,17 @@ Deno.test("part1", () => {
 });
 
 Deno.test("part2", () => {
-  const examples = ["abc", "def"].join("\n");
-  assertEquals(p2.answer(examples), 42);
+  const examples = [
+    "467..114..",
+    "...*......",
+    "..35..633.",
+    "......#...",
+    "617*......",
+    ".....+.58.",
+    "..592.....",
+    "......755.",
+    "...$.*....",
+    ".664.598..",
+  ].join("\n");
+  assertEquals(p2.answer(examples), 467835);
 });
