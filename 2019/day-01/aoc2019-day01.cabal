@@ -1,0 +1,52 @@
+cabal-version: 2.2
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: e77bc6b410826ae756fe74f62792f117658873e8a46c525d21bf02853897e721
+
+name:           aoc2019-day01
+version:        0.1.0.0
+homepage:       https://github.com/sethetter/aoc-2019#readme
+bug-reports:    https://github.com/sethetter/aoc-2019/issues
+author:         Seth Etter
+maintainer:     mail@sethetter.com
+license:        BSD-3-Clause
+build-type:     Simple
+
+source-repository head
+  type: git
+  location: https://github.com/sethetter/aoc-2019
+
+executable aoc2019-day01
+  main-is: Main.hs
+  other-modules:
+      Lib
+      Paths_aoc2019_day01
+  hs-source-dirs:
+      src
+  ghc-options: -Wall
+  build-depends:
+      base >=4.12.0.0 && <4.13
+    , text
+  default-language: Haskell2010
+
+test-suite spec
+  type: exitcode-stdio-1.0
+  main-is: test/Main.hs
+  other-modules:
+      Lib
+      Main
+      Main
+      Spec
+      Paths_aoc2019_day01
+  hs-source-dirs:
+      src
+      test
+  ghc-options: -Wall
+  build-depends:
+      base >=4.12.0.0 && <4.13
+    , hspec
+    , text
+  default-language: Haskell2010

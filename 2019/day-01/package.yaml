@@ -1,0 +1,28 @@
+name:                aoc2019-day01
+# synopsis:            A quick description of your package.
+version:             0.1.0.0
+license:             BSD-3-Clause
+author:              Seth Etter
+maintainer:          mail@sethetter.com
+github:              sethetter/aoc-2019
+
+ghc-options: -Wall
+
+dependencies:
+  - base ^>=4.12.0.0
+  - text
+
+source-dirs:
+  - src
+
+executables:
+  aoc2019-day01:
+    main: Main.hs
+
+tests:
+  spec:
+    main: test/Main.hs
+    source-dirs:
+      - test
+    dependencies:
+      - hspec

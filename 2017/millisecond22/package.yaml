@@ -1,0 +1,50 @@
+name:                millisecond22
+version:             0.1.0.0
+github:              "sethetter/millisecond22"
+license:             BSD3
+author:              "Seth Etter"
+maintainer:          "sethetter@gmail.com"
+copyright:           "MIT"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+# Metadata used when publishing your package
+synopsis:            Short description of your package
+# category:            haskell
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on Github at <https://github.com/sethetter/millisecond22#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- containers >= 0.5.10.2 && < 0.6
+- split
+
+library:
+  source-dirs: src
+
+executables:
+  millisecond22-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - millisecond22
+
+tests:
+  millisecond22-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - millisecond22

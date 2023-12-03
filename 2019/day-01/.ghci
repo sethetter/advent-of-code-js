@@ -1,0 +1,2 @@
+:set -fwarn-unused-binds -fward-unused-imports
+:add src/Lib.hs src/Main.hs test/Spec.hs

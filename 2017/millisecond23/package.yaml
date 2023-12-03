@@ -1,0 +1,50 @@
+name:                millisecond23
+version:             0.1.0.0
+github:              "sethetter/millisecond23"
+license:             BSD3
+author:              "Seth Etter"
+maintainer:          "sethetter@gmail.com"
+copyright:           "MIT"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+# Metadata used when publishing your package
+synopsis:            Short description of your package
+# category:            haskell
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on Github at <https://github.com/sethetter/millisecond23#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- containers
+- primes
+
+library:
+  source-dirs: src
+
+executables:
+  millisecond23-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - millisecond23
+
+tests:
+  millisecond23-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - millisecond23
