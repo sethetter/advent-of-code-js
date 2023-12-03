@@ -66,6 +66,7 @@ function getPartNumsAndSymbols(grid: string[][]): [PartNum[], Coord[]] {
           numStr += current;
           current = grid[y][++x];
         }
+        x--;
         partNums.push({ num: parseInt(numStr), coords });
       }
     }
