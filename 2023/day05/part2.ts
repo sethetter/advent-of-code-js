@@ -9,13 +9,13 @@ if (import.meta.main) {
   console.log(await answer(input));
 }
 
-type Range = {
+export type Range = {
   fromStart: number;
   toStart: number;
   range: number;
 };
 
-type MapRanges = {
+export type MapRanges = {
   from: string;
   to: string;
   ranges: Range[];
@@ -50,22 +50,39 @@ export async function answer(input: string): Promise<number> {
     const to = from + seedRangeLines[i + 1];
     seedRanges.push([from, to]);
   }
-  const rangeMins = await Promise.all(
-    seedRanges.map(
-      ([from, to]) =>
-        new Promise<number>((resolve) => {
-          let minLocNum = Infinity;
-          for (let j = 0; j < to - from; j++) {
-            const seed = from + j;
-            const locNum = getLocationNumber(seed, mapRanges);
-            if (locNum < minLocNum) minLocNum = locNum;
-          }
-          return resolve(minLocNum);
+
+  const rangeMins: number[] = await Promise.all(
+    splitRanges(seedRanges).map(
+      (range) =>
+        new Promise((resolve, reject) => {
+          const worker = new Worker(
+            new URL("./part2-worker.ts", import.meta.url).href,
+            {
+              type: "module",
+            },
+          );
+          worker.postMessage({ range, mapRanges });
+          worker.onmessage = ({ data }) => {
+            if (typeof data?.minLocNum !== "number") {
+              return reject(new Error(`invalid message: ${data}`));
+            }
+            return resolve(data.minLocNum);
+          };
         }),
     ),
   );
 
   return Math.min(...rangeMins);
+}
+
+function splitRanges(ranges: [number, number][]): [number, number][] {
+  const newRanges: [number, number][] = [];
+  for (const [from, to] of ranges) {
+    const middle = Math.ceil(from + (to - from) / 2);
+    newRanges.push([from, middle]);
+    newRanges.push([middle + 1, to]);
+  }
+  return newRanges;
 }
 
 function getLocationNumber(seed: number, mapRanges: MapRanges[]): number {
