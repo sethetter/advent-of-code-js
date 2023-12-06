@@ -28,15 +28,6 @@ export function answer(input: string): number {
     .split(" ")
     .map((x) => parseInt(x));
 
-  const seeds = [];
-  for (let i = 0; i < seedRanges.length; i += 2) {
-    const from = seedRanges[i];
-    const to = from + seedRanges[i + 1];
-    for (let j = 0; j < to - from; j++) {
-      seeds.push(seedRanges[i] + j);
-    }
-  }
-
   const mapRanges: MapRanges[] = mapLines
     .join("\n")
     .split("\n\n")
@@ -53,10 +44,18 @@ export function answer(input: string): number {
       return { from, to, ranges };
     });
 
-  // start at `from: seed` to `to: location`
-  const locationNumbers = seeds.map((s) => getLocationNumber(s, mapRanges));
+  let minLocNum = Infinity;
+  for (let i = 0; i < seedRanges.length; i += 2) {
+    const from = seedRanges[i];
+    const to = from + seedRanges[i + 1];
+    for (let j = 0; j < to - from; j++) {
+      const seed = seedRanges[i] + j;
+      const locNum = getLocationNumber(seed, mapRanges);
+      if (locNum < minLocNum) minLocNum = locNum;
+    }
+  }
 
-  return Math.min(...locationNumbers);
+  return minLocNum;
 }
 
 function getLocationNumber(seed: number, mapRanges: MapRanges[]): number {
