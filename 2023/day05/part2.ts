@@ -52,7 +52,7 @@ export async function answer(input: string): Promise<number> {
   }
 
   const rangeMins: number[] = await Promise.all(
-    splitRanges(seedRanges).map(
+    splitRanges(splitRanges(seedRanges)).map(
       (range) =>
         new Promise((resolve, reject) => {
           const worker = new Worker(
