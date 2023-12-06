@@ -6,7 +6,7 @@ if (import.meta.main) {
       new TextDecoder().decode(bytes),
     )
   ).trim();
-  console.log(answer(input));
+  console.log(await answer(input));
 }
 
 type Range = {
@@ -21,9 +21,9 @@ type MapRanges = {
   ranges: Range[];
 };
 
-export function answer(input: string): number {
+export async function answer(input: string): Promise<number> {
   const [seedLine, _, ...mapLines] = input.split("\n");
-  const seedRanges = seedLine
+  const seedRangeLines = seedLine
     .replace("seeds: ", "")
     .split(" ")
     .map((x) => parseInt(x));
@@ -44,18 +44,28 @@ export function answer(input: string): number {
       return { from, to, ranges };
     });
 
-  let minLocNum = Infinity;
-  for (let i = 0; i < seedRanges.length; i += 2) {
-    const from = seedRanges[i];
-    const to = from + seedRanges[i + 1];
-    for (let j = 0; j < to - from; j++) {
-      const seed = seedRanges[i] + j;
-      const locNum = getLocationNumber(seed, mapRanges);
-      if (locNum < minLocNum) minLocNum = locNum;
-    }
+  const seedRanges: [number, number][] = [];
+  for (let i = 0; i < seedRangeLines.length; i += 2) {
+    const from = seedRangeLines[i];
+    const to = from + seedRangeLines[i + 1];
+    seedRanges.push([from, to]);
   }
+  const rangeMins = await Promise.all(
+    seedRanges.map(
+      ([from, to]) =>
+        new Promise<number>((resolve) => {
+          let minLocNum = Infinity;
+          for (let j = 0; j < to - from; j++) {
+            const seed = from + j;
+            const locNum = getLocationNumber(seed, mapRanges);
+            if (locNum < minLocNum) minLocNum = locNum;
+          }
+          return resolve(minLocNum);
+        }),
+    ),
+  );
 
-  return minLocNum;
+  return Math.min(...rangeMins);
 }
 
 function getLocationNumber(seed: number, mapRanges: MapRanges[]): number {

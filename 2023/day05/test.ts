@@ -42,7 +42,7 @@ Deno.test("part1", () => {
   assertEquals(p1.answer(examples), 35);
 });
 
-Deno.test("part2", () => {
+Deno.test("part2", async () => {
   const examples = [
     "seeds: 79 14 55 13",
     "",
@@ -79,5 +79,5 @@ Deno.test("part2", () => {
     "60 56 37",
     "56 93 4",
   ].join("\n");
-  assertEquals(p2.answer(examples), 46);
+  assertEquals(await p2.answer(examples), 46);
 });
