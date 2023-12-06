@@ -50,6 +50,13 @@ export async function answer(input: string): Promise<number> {
     const to = from + seedRangeLines[i + 1];
     seedRanges.push([from, to]);
   }
+  // TODO: see if there are overlapping ranges we can cut down to reduce the amount of work
+  // for (const [from, to] of seedRanges) {
+  //   for (const [from2, to2] of seedRanges) {
+  //     if (from === from2 && to === to2) continue;
+  //     if (from >= from2 && )
+  //   }
+  // }
 
   const rangeMins: number[] = await Promise.all(
     splitRanges(splitRanges(seedRanges)).map(
