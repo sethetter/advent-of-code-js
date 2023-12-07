@@ -1,5 +1,3 @@
-import { assert } from "https://deno.land/std@0.208.0/assert/assert.ts";
-
 if (import.meta.main) {
   const input = (
     await Deno.readFile("input").then((bytes) =>
