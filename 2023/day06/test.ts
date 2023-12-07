@@ -10,6 +10,8 @@ Deno.test("part1", () => {
 });
 
 Deno.test("part2", () => {
-  const examples = ["abc", "def"].join("\n");
-  assertEquals(p2.answer(examples), 42);
+  const examples = ["Time:      7  15   30", "Distance:  9  40  200"].join(
+    "\n",
+  );
+  assertEquals(p2.answer(examples), 71503);
 });
