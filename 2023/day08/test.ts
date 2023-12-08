@@ -4,6 +4,8 @@ import * as p2 from "./part2.ts";
 
 Deno.test("part1", () => {
   const examples = [
+    "RL",
+    "",
     "AAA = (BBB, CCC)",
     "BBB = (DDD, EEE)",
     "CCC = (ZZZ, GGG)",
@@ -12,7 +14,18 @@ Deno.test("part1", () => {
     "GGG = (GGG, GGG)",
     "ZZZ = (ZZZ, ZZZ)",
   ].join("\n");
-  assertEquals(p1.answer(examples), 6);
+  const examples2 = [
+    "LLR",
+    "",
+    "AAA = (BBB, BBB)",
+    "BBB = (AAA, ZZZ)",
+    "ZZZ = (ZZZ, ZZZ)",
+    "EEE = (EEE, EEE)",
+    "GGG = (GGG, GGG)",
+    "ZZZ = (ZZZ, ZZZ)",
+  ].join("\n");
+  assertEquals(p1.answer(examples), 2);
+  assertEquals(p1.answer(examples2), 6);
 });
 
 // Deno.test("part2", () => {
