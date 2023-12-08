@@ -1,3 +1,8 @@
+export function answer(input: string): number {
+  console.log(input);
+  return 42;
+}
+
 if (import.meta.main) {
   const input = (
     await Deno.readFile("input").then((bytes) =>
@@ -5,9 +10,4 @@ if (import.meta.main) {
     )
   ).trim();
   console.log(answer(input));
-}
-
-export function answer(input: string): number {
-  console.log(input);
-  return 42;
 }
