@@ -1,0 +1,9 @@
+{
+  "tasks": {
+    "cache": "deno cache part1.ts part2.ts",
+    "pull": "aoc --day 8 download --overwrite",
+    "test": "deno test --watch",
+    "p1": "deno run -A part1.ts",
+    "p2": "deno run -A part2.ts"
+  }
+}
