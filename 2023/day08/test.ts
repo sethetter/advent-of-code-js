@@ -28,7 +28,18 @@ Deno.test("part1", () => {
   assertEquals(p1.answer(examples2), 6);
 });
 
-// Deno.test("part2", () => {
-//   const examples = ["abc", "def"].join("\n");
-//   assertEquals(p2.answer(examples), 42);
-// });
+Deno.test("part2", () => {
+  const examples = [
+    "LR",
+    "",
+    "11A = (11B, XXX)",
+    "11B = (XXX, 11Z)",
+    "11Z = (11B, XXX)",
+    "22A = (22B, XXX)",
+    "22B = (22C, 22C)",
+    "22C = (22Z, 22Z)",
+    "22Z = (22B, 22B)",
+    "XXX = (XXX, XXX)",
+  ].join("\n");
+  assertEquals(p2.answer(examples), 6);
+});
