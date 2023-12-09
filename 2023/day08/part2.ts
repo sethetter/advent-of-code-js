@@ -1,7 +1,7 @@
 type Node = { L: string; R: string };
 type Network = Record<string, Node>;
 
-export function answer(input: string): number {
+export function answer(input: string) {
   const [instructions, , ...networkRaw] = input.split("\n");
 
   const network: Network = networkRaw.reduce((network, line) => {
@@ -10,36 +10,30 @@ export function answer(input: string): number {
     return { ...network, [id]: { L, R } };
   }, {});
 
-  const pathsFinished = (paths: string[]): boolean =>
-    paths.every((p) => p.endsWith("Z"));
+  const paths = Object.keys(network).filter((n) => n.endsWith("A"));
+  return BigInt(
+    paths
+      .map((p) => countSteps(p, network, instructions))
+      .reduce((total, x) => (total *= x), 1),
+  );
+}
 
-  const step = (paths: string[], dir: keyof Node): string[] =>
-    paths.map((c) => network[c][dir]);
-
-  let paths = Object.keys(network).filter((n) => n.endsWith("A"));
+function countSteps(
+  start: string,
+  network: Network,
+  instructions: string,
+): number {
+  let currentNode = start;
   let stepCount = 0;
-
-  console.log(`network: ${Object.keys(network).length}`);
-  console.log(`paths: ${paths.length}`);
-
-  while (!pathsFinished(paths)) {
+  while (!currentNode.endsWith("Z")) {
     for (const dir of instructions.split("")) {
-      logPaths(stepCount, paths);
-      paths = step(paths, dir as keyof Node);
+      currentNode = network[currentNode][dir as keyof Node];
       stepCount++;
-      if (pathsFinished(paths)) break;
+      if (currentNode.endsWith("Z")) break;
     }
   }
 
   return stepCount;
-}
-
-function logPaths(stepCount: number, paths: string[]) {
-  console.log(
-    `${stepCount.toString().padStart(20, "0")} ${paths
-      .map((p) => (p.endsWith("Z") ? "x" : "."))
-      .join("")}`,
-  );
 }
 
 if (import.meta.main) {

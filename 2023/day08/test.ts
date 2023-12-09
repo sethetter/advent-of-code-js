@@ -41,5 +41,5 @@ Deno.test("part2", () => {
     "22Z = (22B, 22B)",
     "XXX = (XXX, XXX)",
   ].join("\n");
-  assertEquals(p2.answer(examples), 6);
+  assertEquals(p2.answer(examples), BigInt(6));
 });
