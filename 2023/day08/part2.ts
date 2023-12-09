@@ -1,6 +1,11 @@
-type Node = { L: string; R: string; stepsToZCache: Record<string, number> };
+type Node = { L: string; R: string };
 type Network = Record<string, Node>;
-type Path = { checkpoint: string; sinceCheckpoint: number; current: string };
+
+type Path = {
+  start: string;
+  current: string;
+  history: string[];
+};
 
 export function answer(input: string): number {
   const [instructionsRaw, , ...networkRaw] = input.split("\n");
@@ -8,40 +13,61 @@ export function answer(input: string): number {
   const network: Network = networkRaw.reduce((network, line) => {
     const [id, leftAndRight] = line.split(" = ");
     const [L, R] = leftAndRight.replaceAll(/[\(\)]/g, "").split(", ");
-    return { ...network, [id]: { L, R, stepsToZCache: {} } };
+    return { ...network, [id]: { L, R } };
   }, {});
 
-  const paths: Path[] = Object.keys(network)
-    .filter((n) => n.endsWith("A"))
-    .map((n) => ({ checkpoint: n, sinceCheckpoint: 0, current: n }));
-
-  let step = -1;
   const instructions = instructionsRaw.split("");
 
+  const next = (node: string, i: number): string =>
+    network[node][instructions[i] as "L" | "R"];
+
+  const startNodes = Object.keys(network).filter((n) => n.endsWith("A"));
+  const endNodes = Object.keys(network).filter((n) => n.endsWith("Z"));
+
+  const paths: Path[] = startNodes.map((n) => ({
+    start: n,
+    current: n,
+    history: [],
+  }));
+
+  const stepsToZCache: Record<string, number> = {};
+
+  const stepPath = (p: Path, instIdx: number, step: number) => {
+    p.history.push(p.current);
+    p.current = next(p.current, instIdx);
+
+    if (p.current.endsWith("Z")) {
+      p.history.forEach((prev, i) => {
+        console.log(`${instIdx}.${prev}.${p.current} = ${step - i + 1}`);
+        stepsToZCache[`${instIdx}.${prev}.${p.current}`] = step - i + 1;
+      });
+    }
+  };
+
+  let step = 0;
   while (true) {
-    step++;
     for (let instIdx = 0; instIdx < instructions.length; instIdx++) {
-      // console.log(`step: ${step}`);
-      paths.forEach((p, _pathIdx) => {
-        p.sinceCheckpoint++;
+      const stepsToZFromCurrent: number[] = [];
 
-        p.current = network[p.current][instructions[instIdx] as "L" | "R"];
-
-        if (p.current.endsWith("Z")) {
-          network[p.checkpoint].stepsToZCache[`${instIdx}`] = p.sinceCheckpoint;
-
-          p.checkpoint = p.current;
-          p.sinceCheckpoint = 0;
+      paths.forEach((p) => {
+        stepPath(p, instIdx, step);
+        for (const en of endNodes) {
+          const steps = stepsToZCache[`${instIdx}.${p.current}.${en}`];
+          if (steps) stepsToZFromCurrent.push(steps);
         }
       });
 
-      const stepsToZ = paths.map(
-        (p) => network[p.current].stepsToZCache[`${instIdx}`],
+      const pathsToZ = paths.map((p) =>
+        endNodes
+          .map((en) => stepsToZCache[`${instIdx}.${p.current}.${en}`])
+          .filter((s) => s !== undefined),
       );
 
-      if (stepsToZ.every((s) => s !== undefined)) {
-        return stepsToZ.reduce((product, x) => (product *= x), 1);
+      if (pathsToZ.every((p) => p.length > 0)) {
+        return pathsToZ.reduce((product, x) => (product *= x[x.length - 1]), 1);
       }
+
+      step++;
     }
   }
 }
