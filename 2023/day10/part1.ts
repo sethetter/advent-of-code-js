@@ -1,9 +1,6 @@
 export function answer(input: string): number {
   const m = input.split("\n").map((l) => l.split(""));
-  console.log(`map: ${m[0].length}x${m.length}`);
-
   const mainLoop = findMainLoop(m);
-
   return Math.floor(mainLoop.length / 2);
 }
 
@@ -30,9 +27,8 @@ const findMainLoop = (m: Map): Path => {
     .fill(null)
     .map((_, i) => [start, move(start, dirs[i])]);
 
-  for (const [i, pathStart] of paths.entries()) {
+  for (const pathStart of paths) {
     const path = followPath(m, pathStart);
-    console.log(i, path);
     if (isLoop(m, path)) return path;
   }
   throw "did not find main loop";
