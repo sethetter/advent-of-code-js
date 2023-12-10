@@ -11,7 +11,11 @@ Deno.test("part1", () => {
   assertEquals(p1.answer(examples), 114);
 });
 
-// Deno.test("part2", () => {
-//   const examples = ["abc", "def"].join("\n");
-//   assertEquals(p2.answer(examples), 42);
-// });
+Deno.test("part2", () => {
+  const examples = [
+    "0 3 6 9 12 15",
+    "1 3 6 10 15 21",
+    "10 13 16 21 30 45",
+  ].join("\n");
+  assertEquals(p2.answer(examples), 2);
+});
